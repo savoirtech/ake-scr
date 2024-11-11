@@ -17,7 +17,8 @@ install -s mvn:com.savoir.apache.karaf.essentials.scr/provider
 install -s mvn:com.savoir.apache.karaf.essentials.scr/consumer
 ```
 
-Configure: Create file in Apache Karaf etc folder called "ConfigSC.cfg", include the following properties:
+# Config Admin
 
-port=1234
-url=255.0.0.1
+Configure: Create file in Apache Karaf etc folder called "ConfigSCRDemo.cfg", include the following properties:
+
+greeting=Welcome
