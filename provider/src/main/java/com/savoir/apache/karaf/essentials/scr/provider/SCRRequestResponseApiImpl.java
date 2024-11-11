@@ -16,17 +16,47 @@
 package com.savoir.apache.karaf.essentials.scr.provider;
 
 import com.savoir.apache.karaf.essentials.scr.api.SCRRequestResponseApi;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
- * Simple implementation of the {@link SCRRequestResponseApi}.
+ * Implementation of the {@link SCRRequestResponseApi},
+ * With ConfigAdmin support.
  */
-@Component(service = SCRRequestResponseApi.class)
+@Component(service = SCRRequestResponseApi.class,
+        configurationPid="ConfigSCRDemo",
+        configurationPolicy = ConfigurationPolicy.OPTIONAL)
 public class SCRRequestResponseApiImpl implements SCRRequestResponseApi {
+
+    private String greeting;
+
+    @interface SampleConfig {
+        String greeting() default "Hello";
+    }
+
+    @Activate
+    void activate(SampleConfig sampleConfig) {
+        this.greeting = sampleConfig.greeting();
+        System.out.println("Activate Greeting... " + greeting);
+    }
+
+    @Modified
+    void modified(SampleConfig sampleConfig) {
+        this.greeting = sampleConfig.greeting();
+        System.out.println("Modified Greeting... " + greeting);
+    }
+
+    @Deactivate
+    void deactivate() {
+        System.out.println("Deactivating Greeting... " + greeting);
+    }
 
     @Override
     public String getResponse(String request) {
         System.out.println("In service impl, input: " + request);
-        return "ServiceImpl: " + request;
+        return greeting + ": " + request;
     }
 }
