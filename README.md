@@ -17,8 +17,4 @@ install -s mvn:com.savoir.apache.karaf.essentials.scr/provider
 install -s mvn:com.savoir.apache.karaf.essentials.scr/consumer
 ```
 
-# Config Admin
 
-Configure: Create file in Apache Karaf etc folder called "ConfigSCRDemo.cfg", include the following properties:
-
-greeting=Welcome
